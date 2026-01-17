@@ -1,0 +1,31 @@
+  {
+      "version": "0.2.0",
+      "configurations": [
+          {
+              "name": "Python: Debug Current File in Utils project",
+              "type": "python",
+              "request": "launch",
+              "program": "${file}",
+              "args": [
+                  "--dir", "~/Music/unsorted/promoe",
+                  "--artist", "Promoe",
+                  "--img", "promoe.jpeg",
+                  "--askTitle",
+                  "--replaceWhitespace",
+                  "--cleanupFiles"
+              ],
+              "console": "integratedTerminal",
+              "cwd": "${workspaceFolder}",
+              "env": {
+                  "MY_ENV_VAR": "debug_mode"
+              }
+          },
+          {
+              "name": "Python: Debug Main Entry Point in UTils project",
+              "type": "python",
+              "request": "launch",
+              "program": "${workspaceFolder}/src/main.py",
+              "console": "integratedTerminal"
+          }
+      ]
+  }
