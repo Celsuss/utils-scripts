@@ -7,10 +7,11 @@
               "request": "launch",
               "program": "${file}",
               "args": [
-                  "--dir", "~/Music/unsorted/promoe",
-                  "--artist", "Promoe",
-                  "--img", "promoe.jpeg",
-                  "--askTitle",
+                  "--dir", "~/Music/hiphop-lofi/mf-doom/",
+                  "--filename", "MF DOOM Lofi Villain IV [8R6riJrP1rU].mp3",
+                  "--artist", "Mf Doom",
+                  "--img", "lofi-villain-iv.jpg",
+                  "--title", "lofi villain iv",
                   "--replaceWhitespace",
                   "--cleanupFiles"
               ],

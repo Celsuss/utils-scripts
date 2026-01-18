@@ -43,7 +43,10 @@ class MediaConfig:
 def getFilePaths(dir: str, filename: str, img: str) -> (list[str], str):
     """Find all .mp4 files in dir."""
     path = Path(dir)
-    files = list(path.glob(filename))
+    if "*" in filename:
+        files = list(path.glob(filename))
+    else:
+        files = [path / filename]
     assert files or len(files) > 0
     imageFile = list(path.glob(img))[0] if img else None
     return files, imageFile
@@ -125,20 +128,15 @@ def getOutputFilename(config: tyro.cli, file) -> str:
         file: File to add metadata to.
     """
     if config.replaceWhitespace:
-        outputFilename = trimStr(
-            f"{file._str[: file._str.rindex('/')]}/copy_{file.name}"
-        )
+        path = file.as_posix()
+        outputFilename = trimStr(f"{path[: path.rindex('/')]}/copy_{file.name}")
     else:
         outputFilename = f"copy_{file.name}"
     return outputFilename
 
 
 def cleanupFiles(file: Path, copyFilename: str, trimFilename: bool = False):
-    """Delete original file and rename the copy to the original name.
-
-    1. Delete original file
-    2. Rename copy to original name
-    """
+    """Delete original file and rename the copy to the original name."""
     command = getRmCommand(file)
     subprocess.run(command)
     command = getMvCommand(
