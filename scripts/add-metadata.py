@@ -59,7 +59,7 @@ def getRmCommand(file: Path) -> list[str]:
     Attributes:
         file: File to remove
     """
-    command = ["rm", file._str]
+    command = ["rm", str(file)]
     return command
 
 
@@ -89,9 +89,9 @@ def getFfmpegCommand(
     if config.askTitle:
         title = input("Please provide a title for the song: ")
 
-    command = ["ffmpeg", "-i", file._str]
+    command = ["ffmpeg", "-i", str(file)]
     if imageFile:
-        command.extend(["-i", imageFile._str, "-map", "0:0", "-map", "1:0"])
+        command.extend(["-i", str(imageFile), "-map", "0:0", "-map", "1:0"])
 
     metadataMap = {
         "title": title,
@@ -127,11 +127,9 @@ def getOutputFilename(config: tyro.cli, file) -> str:
         config: Config object with met.adata
         file: File to add metadata to.
     """
+    outputFilename = str(file.parent / f"copy_{file.name}")
     if config.replaceWhitespace:
-        path = file.as_posix()
-        outputFilename = trimStr(f"{path[: path.rindex('/')]}/copy_{file.name}")
-    else:
-        outputFilename = f"copy_{file.name}"
+        outputFilename = trimStr(outputFilename)
     return outputFilename
 
 
@@ -140,7 +138,7 @@ def cleanupFiles(file: Path, copyFilename: str, trimFilename: bool = False):
     command = getRmCommand(file)
     subprocess.run(command)
     command = getMvCommand(
-        copyFilename, file._str if not trimFilename else trimStr(file._str)
+        copyFilename, str(file) if not trimFilename else trimStr(str(file))
     )
     subprocess.run(command)
     print("Finished cleaning up files")
